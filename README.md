@@ -1,47 +1,67 @@
 # cit281-lab6
 
-lab-06.js
 class Book {
-  constructor(title, author, pubDate, isbn) {
-    this.title = title;
-    this.author = author;
-    this.pubDate = pubDate;
-    this.isbn = isbn;
-  }
+    constructor(given_title, author, pubDate, isbn) {
+      this.given_title = title;
+      this.author = author;
+      this.pubDate = pubDate;
+      this.isbn = isbn;
+    }
 }
+ 
 
-class Library {
-  constructor(name) {
-    this._name = name;
-    this._books = [];
-  }
-  get books() {
-    // Return copy of books
-    return JSON.parse(JSON.stringify(this._books));
-  }
-  get count() {
-    return this._books.length;
-  }
-  addBook(book = {}) {
-    const { title = "", author = "", pubDate = "", isbn = "" } = book;
-    if (title.length > 0 && author.length > 0) {
-      const newBook = { title, author, pubDate, isbn };
-      this._books.push(newBook);
+//Part 5: Create and test Library class
+ class Library {
+    constructor(name) {
+      this._name = name;
+      this._books = [];
+    }
+    get books() {
+      // Return copy of books
+      return JSON.parse(JSON.stringify(this._books));
+    }
+    get count() {
+      return this._books.length;
+    }
+    addBook(book = {}) {
+      const { title = "", author = "", pubDate = "" } = book;
+      if (title.length > 0 && author.length > 0) {
+        const newBook = { title, author, pubDate };
+        this._books.push(newBook);
+      }
+    }
+    listBooks() {
+      for (const book of this._books) {
+        const {title, author, pubDate, isbn} = book;
+        console.log(`Title: ${title}, Author: ${author}, PubDate: ${pubDate}`)
+      }
     }
   }
-  listBooks() {
+
+deleteBook(isbn) {
     for (const book of this._books) {
-      const {title, author, pubDate, isbn} = book;
-      console.log(`Title: ${title}, Author: ${author}, PubDate: ${pubDate}, ISBN: ${isbn}`)
+        if (isbn === book.isbn) {
+           console.log("Found book!", book) 
+        }
     }
-  }
-  deleteBook(isbn) {
-    this._books = this._books.filter(book => book.isbn !== isbn);
-  }
+}
 }
 
-// Create library object
-const library = new Library("New York Times Best Seller List");
+
+const uoLibrary = new Library("Knight");
+
+// Create a book, add at least two more
+const atomicHabits = new Book("Atomic Habits", "James Clear", "10/16/2018", "1234567890");
+const ohThePlacesYoullGo = new Book("Oh, the Places You'll Go!", "Dr.Seuss", "01/22/1990", "0987654");
+const greenEggsAndHam = new Book("Green Eggs and Ham","Dr.Seuss", "08/12/1960", "102938");
+
+uoLibrary.addBook(atomicHabits);
+uoLibrary.addBook(ohThePlacesYoullGo);
+
+uoLibrary.listBooks();
+
+
+
 
 // Create books
 const atomicHabits = new Book("Atomic Habits", "James Clear", "10/16/2018", "0735211299");
